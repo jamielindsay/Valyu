@@ -1,0 +1,14 @@
+.overview {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 50% 50%;
+}
+
+.currencySelector {
+  display: flex;
+}
+
+.currencyFlag {
+  width: 25px;
+  height: 25px;
+}

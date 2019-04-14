@@ -1,27 +1,46 @@
 import React from "react";
+import "./overview.css";
 
 class Overview extends React.Component {
   constructor(props) {
     super(props);
 
+    let flagsPath = "icons/flags/";
+
     this.state = {
       currentValue: 671.26,
       baseCurrency: "USD",
-      targetCurrency: "CNY"
+      baseFlag: flagsPath + "usa.svg",
+      targetCurrency: "CNY",
+      targetFlag: flagsPath + "china.svg"
     };
   }
 
   currentValue() {
-    return <div>{this.state.currentValue}</div>;
+    return <div class="currentValue">{this.state.currentValue}</div>;
   }
 
   currencySelector() {
-    let base = <div>{this.state.baseCurrency}</div>;
-    let target = <div>{this.state.targetCurrency}</div>;
+    let base = (
+      <div>
+        <img class="currencyFlag" src={this.state.baseFlag} alt="USA" />
+        {this.state.baseCurrency}
+      </div>
+    );
+    let target = (
+      <div>
+        <img class="currencyFlag" src={this.state.targetFlag} alt="China" />
+        {this.state.targetCurrency}
+      </div>
+    );
 
     return (
-      <div>
+      <div class="currencySelector">
         {base}
+        <img
+          src="https://img.icons8.com/material/24/000000/right.png"
+          alt="Right arrow"
+        />
         {target}
       </div>
     );
@@ -29,7 +48,7 @@ class Overview extends React.Component {
 
   render() {
     return (
-      <div>
+      <div class="overview">
         {this.currentValue()}
         {this.currencySelector()}
       </div>
