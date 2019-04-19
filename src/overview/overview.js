@@ -7,17 +7,25 @@ class Overview extends React.Component {
 
     this.state = {
       targetValue: null,
-      baseValue: 100,
+      exchangeRate: null,
+      baseValue: 1,
       baseCurrency: "USD",
       baseFlag: "icons/flags/usa.svg",
       targetCurrency: "CNY",
       targetFlag: "icons/flags/china.svg"
     };
 
-    this.findExchangeRate();
+    this.updateExchangeRate();
   }
 
-  findExchangeRate() {
+  updateTargetValue() {
+    this.setState({
+      targetValue:
+        Math.round(this.state.exchangeRate * this.state.baseValue * 100) / 100
+    });
+  }
+
+  updateExchangeRate() {
     let url = `https://api.exchangeratesapi.io/latest?base=${
       this.state.baseCurrency
     }&symbols=${this.state.targetCurrency}`;
@@ -25,10 +33,20 @@ class Overview extends React.Component {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        let value =
-          data.rates[this.state.targetCurrency] * this.state.baseValue;
-        this.setState({ targetValue: Math.round(value * 100) / 100 });
+        this.setState(
+          { exchangeRate: data.rates[this.state.targetCurrency] },
+          () => this.updateTargetValue()
+        );
       });
+  }
+
+  updateBaseValue(value) {
+    this.setState(
+      {
+        baseValue: value
+      },
+      () => this.updateTargetValue()
+    );
   }
 
   targetValue() {
@@ -39,7 +57,13 @@ class Overview extends React.Component {
     let base = (
       <div className="currency">
         <img className="currencyFlag" src={this.state.baseFlag} alt="USA" />
-        {this.state.baseValue + " " + this.state.baseCurrency}
+        <input
+          type="number"
+          min="1"
+          defaultValue={this.state.baseValue}
+          onInput={e => this.updateBaseValue(e.target.value)}
+        />
+        {" " + this.state.baseCurrency}
       </div>
     );
     let target = (
