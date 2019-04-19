@@ -5,51 +5,69 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
 
-    let flagsPath = "icons/flags/";
-
     this.state = {
-      currentValue: 671.26,
+      targetValue: null,
+      baseValue: 100,
       baseCurrency: "USD",
-      baseFlag: flagsPath + "usa.svg",
+      baseFlag: "icons/flags/usa.svg",
       targetCurrency: "CNY",
-      targetFlag: flagsPath + "china.svg"
+      targetFlag: "icons/flags/china.svg"
     };
+
+    this.findExchangeRate();
   }
 
-  currentValue() {
-    return <div class="currentValue">{this.state.currentValue}</div>;
+  findExchangeRate() {
+    let url = `https://api.exchangeratesapi.io/latest?base=${
+      this.state.baseCurrency
+    }&symbols=${this.state.targetCurrency}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        let value =
+          data.rates[this.state.targetCurrency] * this.state.baseValue;
+        this.setState({ targetValue: Math.round(value * 100) / 100 });
+      });
+  }
+
+  targetValue() {
+    return <div className="targetValue">{this.state.targetValue}</div>;
   }
 
   currencySelector() {
     let base = (
-      <div>
-        <img class="currencyFlag" src={this.state.baseFlag} alt="USA" />
-        {this.state.baseCurrency}
+      <div className="currency">
+        <img className="currencyFlag" src={this.state.baseFlag} alt="USA" />
+        {this.state.baseValue + " " + this.state.baseCurrency}
       </div>
     );
     let target = (
-      <div>
-        <img class="currencyFlag" src={this.state.targetFlag} alt="China" />
+      <div className="currency">
         {this.state.targetCurrency}
+        <img className="currencyFlag" src={this.state.targetFlag} alt="China" />
       </div>
     );
 
     return (
-      <div class="currencySelector">
-        {base}
-        <img
-          src="https://img.icons8.com/material/24/000000/right.png"
-          alt="Right arrow"
-        />
-        {target}
+      <div className="currencySelector">
+        <div className="selectorItem">{base}</div>
+        <div className="selectorItem">
+          <img
+            id="selectorArrow"
+            src="icons/arrow-right.svg"
+            alt="Right arrow"
+          />
+        </div>
+        <div className="selectorItem">{target}</div>
       </div>
     );
   }
 
   render() {
     return (
-      <div class="overview">
-        {this.currentValue()}
+      <div className="overview">
+        {this.targetValue()}
         {this.currencySelector()}
       </div>
     );
