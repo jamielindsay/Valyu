@@ -1,7 +1,7 @@
 import React from "react";
 import "./overview.css";
 
-class Overview extends React.Component {
+export default class Overview extends React.Component {
   constructor(props) {
     super(props);
 
@@ -97,5 +97,3 @@ class Overview extends React.Component {
     );
   }
 }
-
-export default Overview;

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
 
-import Overview from "./overview/overview";
+import RateDetails from "./pages/rateDetails";
 
 class App extends Component {
   render() {
-    return <Overview />;
+    return <RateDetails />;
   }
 }
 
