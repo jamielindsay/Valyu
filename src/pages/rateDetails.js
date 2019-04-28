@@ -4,6 +4,7 @@ import NavBarDetail from "../navbars/navBarDetail";
 import "./rateDetails.css";
 import DetailChart from "../detailChart/detailChart";
 import DetailAverages from "../detailAverages/detailAverages";
+import LiveQuotes from "../liveQuotes/liveQuotes";
 
 export default class RateDetails extends Component {
   render() {
@@ -14,6 +15,7 @@ export default class RateDetails extends Component {
           <Overview />
           <DetailChart />
           <DetailAverages />
+          <LiveQuotes />
         </div>
       </div>
     );
