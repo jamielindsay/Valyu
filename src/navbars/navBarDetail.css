@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
-
 .navBar {
   display: flex;
   justify-content: space-between;
@@ -7,11 +5,18 @@
 
   background-color: #5943c3;
   color: #f7f6f6;
-  font-family: "Open Sans", sans-serif;
-  font-size: 1rem;
   padding: 25px 0;
 }
 
 .navIcon {
   margin: 0 40px;
+  flex-flow: 1;
+}
+
+.navTitle {
+  text-align: left;
+  flex-grow: 1;
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin-left: 25px;
 }

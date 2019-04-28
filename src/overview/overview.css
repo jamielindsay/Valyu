@@ -25,16 +25,21 @@
 }
 
 .currencySelector input {
-  padding: 5px;
+  padding: 4px;
+  padding-top: 7px;
   width: 40px;
   text-align: right;
   margin: 0 5px;
-  border-radius: 5px;
   border-style: solid;
   border-color: #a3a3a3;
-  border-width: 1px;
+  border-width: 0 0 2px 0;
   color: #a3a3a3;
   font-weight: 600;
+}
+
+.currencySelector input:focus {
+  outline: none;
+  border-color: #fcc692;
 }
 
 input::-webkit-inner-spin-button,
