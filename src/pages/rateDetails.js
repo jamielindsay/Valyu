@@ -3,6 +3,7 @@ import Overview from "../overview/overview";
 import NavBarDetail from "../navbars/navBarDetail";
 import "./rateDetails.css";
 import DetailChart from "../detailChart/detailChart";
+import DetailAverages from "../detailAverages/detailAverages";
 
 export default class RateDetails extends Component {
   render() {
@@ -12,6 +13,7 @@ export default class RateDetails extends Component {
         <div className="mainContent">
           <Overview />
           <DetailChart />
+          <DetailAverages />
         </div>
       </div>
     );
