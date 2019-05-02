@@ -6,73 +6,104 @@ import "./detailChart.css";
 export default class DetailChart extends Component {
   constructor(props) {
     super(props);
-
     this.chartElementRef = React.createRef();
+
+    this.state = {
+      historicalData: props.historicalData
+    };
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState(
+      {
+        historicalData: newProps.historicalData
+      },
+      () => this.createChart()
+    );
   }
 
   componentDidMount() {
-    this.ctx = this.chartElementRef.current.getContext("2d");
+    this.createChart();
+  }
 
-    var gradientStroke = this.ctx.createLinearGradient(0, 0, 200, 0);
-    gradientStroke.addColorStop(0, "#5943C3");
-    gradientStroke.addColorStop(1, "#FCC692");
+  createChart() {
+    if (this.state.historicalData) {
+      let dates = this.state.historicalData[0];
+      let values = this.state.historicalData[1];
 
-    var gradientFill = this.ctx.createLinearGradient(0, 0, 200, 0);
-    gradientFill.addColorStop(0, "rgba(89, 67, 195, 0.05)");
-    gradientFill.addColorStop(1, "rgba(252, 198, 146, 0.05)");
+      this.ctx = this.chartElementRef.current.getContext("2d");
 
-    new Chart(this.ctx, {
-      type: "line",
-      data: {
-        labels: ["7D", "1M", "6M", "1Y", "3Y", "5Y"],
-        datasets: [
-          {
-            data: [12, 19, 3, 5, 2, 3],
-            borderColor: gradientStroke,
-            pointBorderColor: gradientStroke,
-            pointBackgroundColor: gradientStroke,
-            pointRadius: 0,
-            fill: true,
-            backgroundColor: gradientFill,
-            borderWidth: 3
-          }
-        ]
-      },
-      options: {
-        elements: {
-          line: {
-            tension: 0
-          }
-        },
-        animation: {
-          easing: "easeInOutBack"
-        },
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {
-          display: false
-        },
-        scales: {
-          yAxes: [
+      var gradientStroke = this.ctx.createLinearGradient(0, 0, 200, 0);
+      gradientStroke.addColorStop(0, "#5943C3");
+      gradientStroke.addColorStop(1, "#FCC692");
+
+      var gradientFill = this.ctx.createLinearGradient(0, 0, 200, 0);
+      gradientFill.addColorStop(0, "rgba(89, 67, 195, 0.05)");
+      gradientFill.addColorStop(1, "rgba(252, 198, 146, 0.05)");
+
+      new Chart(this.ctx, {
+        type: "line",
+        data: {
+          labels: dates,
+          datasets: [
             {
-              display: false
-            }
-          ],
-          xAxes: [
-            {
-              gridLines: {
-                drawBorder: false,
-                display: false
-              },
-              ticks: {
-                fontColor: "#a3a3a3",
-                fontStyle: "bold"
-              }
+              data: values,
+              borderColor: gradientStroke,
+              pointBorderColor: gradientStroke,
+              pointBackgroundColor: gradientStroke,
+              pointRadius: 0,
+              fill: true,
+              backgroundColor: gradientFill,
+              borderWidth: 3
             }
           ]
+        },
+        options: {
+          elements: {
+            line: {
+              tension: 0.5
+            }
+          },
+          animation: {
+            easing: "easeInOutBack"
+          },
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [
+              {
+                display: false
+              }
+            ],
+            xAxes: [
+              {
+                type: "time",
+                time: {
+                  unit: "month"
+                },
+                distribution: "linear",
+                gridLines: {
+                  drawBorder: false,
+                  display: false
+                },
+                ticks: {
+                  fontColor: "#a3a3a3",
+                  fontStyle: "bold",
+                  callback: function(tick, index, array) {
+                    return index % 3 ? "" : tick;
+                  },
+                  maxRotation: 0,
+                  minRotation: 0
+                }
+              }
+            ]
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   lineChart() {
