@@ -14,12 +14,17 @@ export default class RateDetails extends Component {
       historicalData: [],
       high: 0,
       low: 0,
-      average: 0
+      average: 0,
+      chg: 0
     };
   }
 
   componentDidMount() {
     this.fetchHistoricalData();
+  }
+
+  round(num) {
+    return Math.round(num * 100) / 100;
   }
 
   fetchHistoricalData() {
@@ -50,11 +55,13 @@ export default class RateDetails extends Component {
         });
 
         let sum = values.reduce((previous, current) => (current += previous));
+        let diff = ((values[values.length - 1] - values[0]) / values[0]) * 100;
         this.setState({
           historicalData: [dates, values],
-          low: Math.min(...values),
-          high: Math.max(...values),
-          average: sum / values.length
+          low: this.round(Math.min(...values)),
+          high: this.round(Math.max(...values)),
+          average: this.round(sum / values.length),
+          chg: this.round(diff)
         });
       });
   }
@@ -66,7 +73,12 @@ export default class RateDetails extends Component {
         <div className="mainContent">
           <Overview />
           <DetailChart historicalData={this.state.historicalData} />
-          <DetailAverages />
+          <DetailAverages
+            high={this.state.high}
+            low={this.state.low}
+            average={this.state.average}
+            chg={this.state.chg}
+          />
           <LiveQuotes />
         </div>
       </div>

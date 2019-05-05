@@ -2,10 +2,31 @@ import React, { Component } from "react";
 import "./detailAverage.css";
 
 export default class DetailAverages extends Component {
+  constructor(props) {
+    super(props);
+    this.chartElementRef = React.createRef();
+
+    this.state = {
+      high: props.high,
+      low: props.low,
+      average: props.average,
+      chg: props.chg
+    };
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState({
+      high: newProps.high,
+      low: newProps.low,
+      average: newProps.average,
+      chg: newProps.chg
+    });
+  }
+
   high() {
     return (
       <div>
-        <div className="number">677.21</div>
+        <div className="number">{this.state.high}</div>
         <div className="label">H</div>
       </div>
     );
@@ -14,7 +35,7 @@ export default class DetailAverages extends Component {
   low() {
     return (
       <div>
-        <div className="number">668.62</div>
+        <div className="number">{this.state.low}</div>
         <div className="label">L</div>
       </div>
     );
@@ -23,7 +44,7 @@ export default class DetailAverages extends Component {
   average() {
     return (
       <div>
-        <div className="number">671.65</div>
+        <div className="number">{this.state.average}</div>
         <div className="label">A</div>
       </div>
     );
@@ -32,7 +53,7 @@ export default class DetailAverages extends Component {
   change() {
     return (
       <div>
-        <div className="number">-0.87%</div>
+        <div className="number">{this.state.chg}%</div>
         <div className="label">Chg</div>
       </div>
     );
