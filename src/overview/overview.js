@@ -7,6 +7,7 @@ export default class Overview extends React.Component {
 
     this.state = {
       targetValue: null,
+      targetCallback: props.passTargetValue,
       exchangeRate: null,
       baseValue: 1,
       baseCurrency: "USD",
@@ -14,30 +15,27 @@ export default class Overview extends React.Component {
       targetCurrency: "CNY",
       targetFlag: "icons/flags/china.svg"
     };
+  }
 
-    this.updateExchangeRate();
+  componentWillReceiveProps(newProps) {
+    if (this.state.exchangeRate !== newProps.exchangeRate) {
+      this.setState(
+        {
+          exchangeRate: newProps.exchangeRate
+        },
+        () => this.updateTargetValue()
+      );
+    }
   }
 
   updateTargetValue() {
-    this.setState({
-      targetValue:
-        Math.round(this.state.exchangeRate * this.state.baseValue * 100) / 100
-    });
-  }
-
-  updateExchangeRate() {
-    let url = `https://api.exchangeratesapi.io/latest?base=${
-      this.state.baseCurrency
-    }&symbols=${this.state.targetCurrency}`;
-
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        this.setState(
-          { exchangeRate: data.rates[this.state.targetCurrency] },
-          () => this.updateTargetValue()
-        );
-      });
+    this.setState(
+      {
+        targetValue:
+          Math.round(this.state.exchangeRate * this.state.baseValue * 100) / 100
+      },
+      () => this.state.targetCallback(this.state.targetValue)
+    );
   }
 
   updateBaseValue(value) {

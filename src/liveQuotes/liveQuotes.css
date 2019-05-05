@@ -6,7 +6,7 @@
   margin-top: 35px;
 }
 
-.yahoo {
+.ecb {
   width: 85%;
   display: flex;
   justify-content: space-evenly;
@@ -16,11 +16,15 @@
 
 .exchangeLogo {
   flex-grow: 1;
+  width: 10px;
+  height: 25px;
+  border-radius: 10%;
 }
 
 .exchangeName {
   flex-grow: 2;
   font-weight: 600;
+  margin-left: 8px;
 }
 
 .quote {

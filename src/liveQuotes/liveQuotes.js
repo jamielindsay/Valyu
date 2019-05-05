@@ -2,12 +2,31 @@ import React, { Component } from "react";
 import "./liveQuotes.css";
 
 export default class LiveQuotes extends Component {
-  yahoo() {
+  constructor(props) {
+    super(props);
+    this.chartElementRef = React.createRef();
+
+    this.state = {
+      ecbRate: props.ecbRate
+    };
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState({
+      ecbRate: newProps.ecbRate
+    });
+  }
+
+  ecb() {
     return (
-      <div className="yahoo">
-        <div className="exchangeLogo">YH</div>
-        <div className="exchangeName">YAHOO</div>
-        <div className="quote">671.19</div>
+      <div className="ecb">
+        <img
+          className="exchangeLogo"
+          src="icons/orgs/european_central_bank.svg"
+          alt="ECB"
+        />
+        <div className="exchangeName">European Central Bank</div>
+        <div className="quote">{this.state.ecbRate}</div>
       </div>
     );
   }
@@ -16,7 +35,7 @@ export default class LiveQuotes extends Component {
     return (
       <div className="quotes">
         <div className="quotesLabel">Live Quotes</div>
-        {this.yahoo()}
+        {this.ecb()}
       </div>
     );
   }

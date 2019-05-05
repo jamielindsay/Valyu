@@ -9,18 +9,34 @@ import LiveQuotes from "../liveQuotes/liveQuotes";
 export default class RateDetails extends Component {
   constructor(props) {
     super(props);
+    this.getTargetValue = this.getTargetValue.bind(this);
+    this.targetValue = null;
 
     this.state = {
+      exchangeRate: null,
+      baseCurrency: "USD",
+      targetCurrency: "CNY",
       historicalData: [],
       high: 0,
       low: 0,
       average: 0,
       chg: 0
     };
+
+    this.fetchExchangeRate();
+    this.fetchHistoricalData();
   }
 
-  componentDidMount() {
-    this.fetchHistoricalData();
+  fetchExchangeRate() {
+    let url = `https://api.exchangeratesapi.io/latest?base=${
+      this.state.baseCurrency
+    }&symbols=${this.state.targetCurrency}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ exchangeRate: data.rates[this.state.targetCurrency] });
+      });
   }
 
   round(num) {
@@ -66,12 +82,19 @@ export default class RateDetails extends Component {
       });
   }
 
+  getTargetValue(val) {
+    this.targetValue = val;
+  }
+
   render() {
     return (
       <div className="page">
         <NavBarDetail />
         <div className="mainContent">
-          <Overview />
+          <Overview
+            exchangeRate={this.state.exchangeRate}
+            passTargetValue={this.getTargetValue}
+          />
           <DetailChart historicalData={this.state.historicalData} />
           <DetailAverages
             high={this.state.high}
@@ -79,7 +102,7 @@ export default class RateDetails extends Component {
             average={this.state.average}
             chg={this.state.chg}
           />
-          <LiveQuotes />
+          <LiveQuotes ecbRate={this.targetValue} />
         </div>
       </div>
     );
