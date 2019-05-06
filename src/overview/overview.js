@@ -57,9 +57,15 @@ export default class Overview extends React.Component {
         <img className="currencyFlag" src={this.state.baseFlag} alt="USA" />
         <input
           type="number"
-          min="1"
+          maxLength="5"
           defaultValue={this.state.baseValue}
-          onInput={e => this.updateBaseValue(e.target.value)}
+          onInput={e => {
+            e.target.value = e.target.value.replace(/[-+]+/, "");
+            if (e.target.value.length > e.target.maxLength) {
+              e.target.value = e.target.value.slice(0, e.target.maxLength);
+            }
+            this.updateBaseValue(e.target.value);
+          }}
         />
         {" " + this.state.baseCurrency}
       </div>

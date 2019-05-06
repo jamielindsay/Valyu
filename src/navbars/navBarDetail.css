@@ -1,7 +1,7 @@
 .navBar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 50px auto 50px;
+  grid-template-rows: 30px;
 
   background-color: #5943c3;
   color: #f7f6f6;
@@ -10,13 +10,12 @@
 
 .navIcon {
   margin: 0 40px;
-  flex-flow: 1;
+  grid-column: 1;
 }
 
 .navTitle {
-  text-align: left;
-  flex-grow: 1;
+  grid-column: 2;
+  text-align: center;
   font-weight: 600;
   font-size: 1.4rem;
-  margin-left: 25px;
 }

@@ -20,11 +20,13 @@ export default class LiveQuotes extends Component {
   ecb() {
     return (
       <div className="ecb">
-        <img
-          className="exchangeLogo"
-          src="icons/orgs/european_central_bank.svg"
-          alt="ECB"
-        />
+        <div className="logoBox">
+          <img
+            className="exchangeLogo"
+            src="icons/orgs/european_central_bank.svg"
+            alt="ECB"
+          />
+        </div>
         <div className="exchangeName">European Central Bank</div>
         <div className="quote">{this.state.ecbRate}</div>
       </div>
