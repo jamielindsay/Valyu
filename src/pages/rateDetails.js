@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Overview from "../overview/overview";
-import NavBarDetail from "../navbars/navBarDetail";
+import Overview from "../components/overview/overview";
+import NavBarDetail from "../components/navbars/navBarDetail";
 import "./rateDetails.css";
-import DetailChart from "../detailChart/detailChart";
-import DetailAverages from "../detailAverages/detailAverages";
-import LiveQuotes from "../liveQuotes/liveQuotes";
+import DetailChart from "../components/detailChart/detailChart";
+import DetailAverages from "../components/detailAverages/detailAverages";
+import LiveQuotes from "../components/liveQuotes/liveQuotes";
 
 export default class RateDetails extends Component {
   constructor(props) {

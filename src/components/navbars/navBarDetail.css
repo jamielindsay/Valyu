@@ -11,6 +11,7 @@
 .navIcon {
   margin: 0 40px;
   grid-column: 1;
+  cursor: pointer;
 }
 
 .navTitle {
