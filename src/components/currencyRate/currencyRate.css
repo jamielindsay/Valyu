@@ -1,0 +1,29 @@
+.rateContainer {
+  display: flex;
+  width: 80%;
+  margin: 40px auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flag {
+  max-height: 40px;
+}
+
+.rateCurrency {
+  font-weight: 700;
+}
+
+.rateValue {
+  font-size: 1rem;
+  color: #a4a4a4;
+}
+.rateValue .actual {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: black;
+}
+
+.rateChange {
+  font-weight: 700;
+}
