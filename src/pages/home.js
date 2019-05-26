@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NavBarHome from "../components/navbars/navBarHome";
+import Searchbar from "../components/searchbar/searchbar";
 
 export default class Home extends Component {
   render() {
@@ -7,7 +8,7 @@ export default class Home extends Component {
       <div className="page">
         <NavBarHome />
         <div className="mainContent">
-          <div />
+          <Searchbar />
           <div />
         </div>
       </div>

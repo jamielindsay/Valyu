@@ -1,0 +1,17 @@
+.searchbar {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 10px 0;
+  margin: 35px auto;
+  color: #a3a3a3;
+  border-color: #a3a3a3;
+  font-size: 1.3rem;
+  width: 80%;
+}
+
+.searchbar:focus {
+  outline: none;
+  border-color: black;
+  color: black;
+}
