@@ -1,0 +1,19 @@
+.navHome {
+  padding: 5px 0;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 100px auto 100px;
+  grid-template-rows: 80px;
+  justify-items: center;
+  align-items: center;
+}
+
+.logo {
+  grid-column: 2;
+  max-height: 80px;
+}
+
+.icon {
+  grid-column: 3;
+  justify-self: start;
+}

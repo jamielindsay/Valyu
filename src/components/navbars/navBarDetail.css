@@ -2,6 +2,8 @@
   display: grid;
   grid-template-columns: 50px auto 50px;
   grid-template-rows: 30px;
+  justify-items: center;
+  align-items: center;
 
   background-color: #5943c3;
   color: #f7f6f6;
@@ -9,9 +11,9 @@
 }
 
 .navIcon {
-  margin: 0 40px;
   grid-column: 1;
   cursor: pointer;
+  justify-self: end;
 }
 
 .navTitle {
