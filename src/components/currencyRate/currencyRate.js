@@ -11,7 +11,8 @@ export default class CurrencyRate extends Component {
     this.state = {
       flag: flagPath,
       currency: props.currency,
-      value: props.value
+      value: props.value,
+      change: props.change
     };
   }
 
@@ -25,12 +26,22 @@ export default class CurrencyRate extends Component {
   }
 
   render() {
+    if (this.state.change > 0) {
+      var style = { color: "green" };
+    } else if (this.state.change == 0) {
+      style = {};
+    } else {
+      style = { color: "red" };
+    }
+
     return (
       <div className="rateContainer">
         <img className="flag" src={this.state.flag} alt="" />
         <div className="rateCurrency">{this.state.currency}</div>
         {this.value()}
-        <div className="rateChange">0.00%</div>
+        <div className="rateChange" style={style}>
+          {this.state.change}%
+        </div>
       </div>
     );
   }

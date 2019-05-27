@@ -24,15 +24,37 @@ export default class RatesList extends Component {
     this.getRateList();
   }
 
+  getPrevDayData(date) {
+    let prevDate = new Date(date);
+    prevDate.setDate(prevDate.getDate() - 1);
+    return fetch(
+      "https://api.exchangeratesapi.io/" +
+        prevDate.toISOString().split("T")[0] +
+        "?base=CNY"
+    ).then(res => res.json());
+  }
+
+  calculateChange(cur, prev) {
+    console.log(cur, prev);
+    return this.round(((cur - prev) / cur) * 100).toFixed(2);
+  }
+
   getRateList() {
     fetch("https://api.exchangeratesapi.io/latest?base=CNY")
       .then(res => res.json())
-      .then(data => {
+      .then(async data => {
+        let prevDayData = await this.getPrevDayData(data.date);
         this.targetRates.forEach(rate => {
+          let change = this.calculateChange(
+            data.rates[rate],
+            prevDayData.rates[rate]
+          );
+
           this.rates.push(
             <CurrencyRate
               currency={rate}
               value={this.round(data.rates[rate])}
+              change={change}
             />
           );
         });
