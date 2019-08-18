@@ -28,7 +28,7 @@ export default class CurrencyRate extends Component {
   render() {
     if (this.state.change > 0) {
       var style = { color: "green" };
-    } else if (this.state.change == 0) {
+    } else if (this.state.change === 0) {
       style = {};
     } else {
       style = { color: "red" };
