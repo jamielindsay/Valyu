@@ -1,22 +1,29 @@
 .rateContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 100%;
   width: 80%;
   margin: 40px auto;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .flag {
   max-height: 40px;
+  max-width: 40px;
+  margin: auto 0;
+  grid-column: 1 / 1;
 }
 
 .rateCurrency {
   font-weight: 700;
+  margin: auto 0;
+  grid-column: 2 / 2;
 }
 
 .rateValue {
   font-size: 1rem;
   color: #a4a4a4;
+  margin: auto;
+  grid-column: 3 / 3;
 }
 .rateValue .actual {
   font-size: 1.2rem;
@@ -26,4 +33,7 @@
 
 .rateChange {
   font-weight: 700;
+  margin: auto 0;
+  grid-column: 4 / 4;
+  text-align: right;
 }

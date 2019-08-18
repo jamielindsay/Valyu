@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import CurrencyRate from "../currencyRate/currencyRate";
 
 export default class RatesList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.targetRates = [
       "CNY",
       "USD",
@@ -15,13 +15,19 @@ export default class RatesList extends Component {
       "INR",
       "SGD"
     ];
+
     this.rates = [];
 
     this.state = {
-      rendered: false
+      rendered: false,
+      order: props.order
     };
 
     this.getRateList();
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setState({ order: newProps.order });
   }
 
   getPrevDayData(date) {
@@ -35,7 +41,6 @@ export default class RatesList extends Component {
   }
 
   calculateChange(cur, prev) {
-    console.log(cur, prev);
     return this.round(((cur - prev) / cur) * 100).toFixed(2);
   }
 
@@ -50,15 +55,14 @@ export default class RatesList extends Component {
             prevDayData.rates[rate]
           );
 
-          this.rates.push(
-            <CurrencyRate
-              currency={rate}
-              value={this.round(data.rates[rate])}
-              change={change}
-            />
-          );
+          this.rates.push({
+            currency: rate,
+            value: this.round(data.rates[rate]),
+            change: change
+          });
         });
-        this.setState({ rendered: true });
+
+        this.generateRatesLists();
       });
   }
 
@@ -66,9 +70,45 @@ export default class RatesList extends Component {
     return Math.round(num * 100) / 100;
   }
 
+  sortRates(order) {
+    this.rates.sort((a, b) =>
+      order === "asc" ? a.change - b.change : b.change - a.change
+    );
+  }
+
+  buildRatesList(order) {
+    this.sortRates(order);
+    let rates = [];
+    this.rates.forEach((rate, i) => {
+      rates.push(
+        <CurrencyRate
+          key={order + i}
+          currency={rate.currency}
+          value={rate.value}
+          change={rate.change}
+        />
+      );
+    });
+    return rates;
+  }
+
+  generateRatesLists() {
+    this.setState({
+      rendered: true,
+      ratesLists: {
+        asc: this.buildRatesList("asc"),
+        desc: this.buildRatesList("desc")
+      }
+    });
+  }
+
   render() {
     if (this.state.rendered) {
-      return <div className="ratesList">{this.rates}</div>;
+      return (
+        <div className="ratesList">
+          {this.state.ratesLists[this.state.order]}
+        </div>
+      );
     } else {
       return <span>Loading...</span>;
     }
