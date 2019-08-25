@@ -4,6 +4,23 @@
   grid-template-rows: 100%;
   width: 80%;
   margin: 40px auto;
+  padding: 5px 5px;
+  border-radius: 5px;
+}
+
+.rateContainer:active {
+  background-color: #e7e7e7;
+}
+
+.rateContainer-selected {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 100%;
+  width: 80%;
+  margin: 40px auto;
+  background-color: #e7e7e7;
+  padding: 5px 5px;
+  border-radius: 7px;
 }
 
 .flag {
@@ -21,7 +38,7 @@
 
 .rateValue {
   font-size: 1rem;
-  color: #a4a4a4;
+  color: #8b8b8b;
   margin: auto;
   grid-column: 3 / 3;
 }

@@ -16,11 +16,10 @@ export default class RatesList extends Component {
       "SGD"
     ];
 
-    this.rates = [];
-
     this.state = {
       rendered: false,
-      order: props.order
+      order: props.order,
+      base: "CNY"
     };
 
     this.getRateList();
@@ -36,7 +35,7 @@ export default class RatesList extends Component {
     return fetch(
       "https://api.exchangeratesapi.io/" +
         prevDate.toISOString().split("T")[0] +
-        "?base=CNY"
+        `?base=${this.state.base}`
     ).then(res => res.json());
   }
 
@@ -45,7 +44,8 @@ export default class RatesList extends Component {
   }
 
   getRateList() {
-    fetch("https://api.exchangeratesapi.io/latest?base=CNY")
+    this.rates = [];
+    fetch(`https://api.exchangeratesapi.io/latest?base=${this.state.base}`)
       .then(res => res.json())
       .then(async data => {
         let prevDayData = await this.getPrevDayData(data.date);
@@ -80,14 +80,29 @@ export default class RatesList extends Component {
     this.sortRates(order);
     let rates = [];
     this.rates.forEach((rate, i) => {
-      rates.push(
-        <CurrencyRate
-          key={order + i}
-          currency={rate.currency}
-          value={rate.value}
-          change={rate.change}
-        />
+      let selected = rate.currency === this.state.base;
+      let elem = (
+        <div
+          onClick={() => {
+            this.setState({ base: rate.currency }, this.getRateList);
+          }}
+        >
+          <CurrencyRate
+            key={this.state.base + order + i}
+            currency={rate.currency}
+            base={this.state.base}
+            value={rate.value}
+            change={rate.change}
+            selected={selected}
+          />
+        </div>
       );
+
+      if (selected) {
+        rates.unshift(elem);
+      } else {
+        rates.push(elem);
+      }
     });
     return rates;
   }
